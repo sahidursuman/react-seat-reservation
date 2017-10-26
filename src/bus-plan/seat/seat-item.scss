@@ -1,0 +1,15 @@
+.seat-box {
+  background: #fff;
+  border: solid 1px;
+  padding: 5px 10px;
+
+  &.occupied {
+    background: #333;
+    color: #fff;
+  }
+
+  &.selected {
+    background: #445544;
+    color: #fff;
+  }
+}
