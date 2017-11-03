@@ -2,11 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types';
 
 import './App.css';
-import {selectSeat} from '../actions/seat.actions';
+import {occupySeat, selectSeat} from '../actions/seats.actions';
 import {finishUser, registerUser} from '../actions/user.actions';
 import Register from '../components/register';
 import BusPlan from '../components/bus-plan';
 import {connect} from 'react-redux';
+import {addHistory} from '../actions/histories.actions';
 
 class App extends React.Component {
     render() {
@@ -25,14 +26,14 @@ class App extends React.Component {
                             onRegisterUser={(name, numberOfSeats) => dispatch(registerUser(name, numberOfSeats))}/>
                         : ''}
 
-                    {(user && user.numberOfSeats > 0 && user.numberOfSeats <= availableSeats)
+                    {(user && user.numberOfSeats >= 0 && user.numberOfSeats <= availableSeats)
                         ? <BusPlan seats={seats}
                                    allowNumbers={user.numberOfSeats}
                                    onSeatClick={(seat) => dispatch(selectSeat(user, seat))}/>
                         : ''}
 
-                    {(user && user.numberOfSeats > 0 && user.numberOfSeats <= availableSeats)
-                        ? <button onClick={dispatch(finishUser(user))}>Finish</button>
+                    {(user && user.numberOfSeats >= 0 && user.numberOfSeats <= availableSeats)
+                        ? <button onClick={() => this.finishReservation()}>Finish</button>
                         : ''}
                 </div>
                 <div className="App-intro">
@@ -40,13 +41,22 @@ class App extends React.Component {
                     <ul>
                         {histories.map((entry, index) =>
                             <li key={index}>
-                                {index + 1}. {entry.user.name}: {entry.seats.length} Seats
+                                {index + 1}. {entry.user.name}: {entry.user.selectedSeats.map((seatNo, i) => <span key={i}>Seat {seatNo}</span>)}
                             </li>
                         )}
                     </ul>
                 </div>
             </div>
         );
+    }
+
+    finishReservation() {
+        this.props.user.selectedSeats.forEach((seatNo) => {
+            this.props.dispatch(occupySeat(seatNo));
+        });
+
+        this.props.dispatch(addHistory(this.props.user));
+        this.props.dispatch(finishUser(this.props.user));
     }
 
     countAvailableSeats() {
@@ -64,11 +74,7 @@ App.propTypes = {
     user: PropTypes.shape({
         name: PropTypes.string.isRequired,
         numberOfSeats: PropTypes.number.isRequired,
-        selectedSeats: PropTypes.arrayOf(PropTypes.shape({
-            occupied: PropTypes.bool.isRequired,
-            selected: PropTypes.bool,
-            seatNo: PropTypes.string.isRequired
-        }).isRequired).isRequired
+        selectedSeats: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
     }),
     seats: PropTypes.arrayOf(PropTypes.shape({
         occupied: PropTypes.bool.isRequired,
@@ -79,32 +85,17 @@ App.propTypes = {
         user: PropTypes.shape({
             name: PropTypes.string.isRequired,
             numberOfSeats: PropTypes.number.isRequired,
-            selectedSeats: PropTypes.arrayOf(PropTypes.shape({
-                occupied: PropTypes.bool.isRequired,
-                selected: PropTypes.bool,
-                seatNo: PropTypes.string.isRequired
-            }).isRequired).isRequired
+            selectedSeats: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
         })
     }))
 };
 
-
-function initSeat(number) {
-    let arr = [];
-    for (let i = 0; i < number; i++) {
-        arr[i] = {
-            seatNo: i + 1,
-            occupied: false,
-            selected: false
-        };
-    }
-    return arr;
-}
-
-function select() {
+const map = (state) => {
     return {
-        seats: initSeat(20)
+        seats: state.seats,
+        user: state.user,
+        histories: state.histories
     }
-}
+};
 
-export default connect(select)(App);
+export default connect(map)(App);

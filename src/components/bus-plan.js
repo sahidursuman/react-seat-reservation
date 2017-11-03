@@ -7,8 +7,8 @@ export default class BusPlan extends React.Component {
         return (
             <div>
                 <h1>Seat map in bus, {this.props.allowNumbers} seats allowed</h1>
-                {this.props.seats.map((seat) =>
-                    <span><SeatItem {...seat} onClick={() => this.handleClick(seat)}/></span>
+                {this.props.seats.map((seat, index) =>
+                    <span key={index}><SeatItem {...seat} onClick={() => this.handleClick(seat)}/></span>
                 )}
             </div>
         )
@@ -17,14 +17,6 @@ export default class BusPlan extends React.Component {
 
     handleClick(seat) {
         if (seat.occupied) {
-            return;
-        }
-
-        if (seat.selected && this.props.allowNumbers >= 0) {
-            this.props.allowNumbers++;
-        } else if (!seat.selected && this.props.allowNumbers > 0) {
-            this.props.allowNumbers--;
-        } else {
             return;
         }
 

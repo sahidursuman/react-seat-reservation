@@ -27,11 +27,14 @@ export default class Register extends React.Component {
     handleClick(e) {
         const nameNode = this.refs.name;
         const numberNode = this.refs.number;
+        if (nameNode.value === '' || numberNode.value === 0) {
+            return;
+        }
 
         this.props.onRegisterUser(nameNode.value.trim(), numberNode.value);
 
         nameNode.value = '';
-        numberNode.value = 0;
+        numberNode.value = null;
     }
 }
 
