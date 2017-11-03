@@ -27,10 +27,11 @@ function seats(state = [], action) {
                     } else {
                         selectedSeats.push(seat.seatNo);
                     }
-                    console.log(selectedSeats);
                     Object.assign({}, state, {
                         user: {
-                            selectedSeats: selectedSeats
+                            selectedSeats: selectedSeats.sort(function(a, b) {
+                                return a - b;
+                            })
                         }
                     });
 

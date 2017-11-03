@@ -8,6 +8,7 @@ import Register from '../components/register';
 import BusPlan from '../components/bus-plan';
 import {connect} from 'react-redux';
 import {addHistory} from '../actions/histories.actions';
+import Histories from '../components/histories';
 
 class App extends React.Component {
     render() {
@@ -19,32 +20,23 @@ class App extends React.Component {
                     <h1 className="App-title">Seat Reservation</h1>
                 </header>
                 <div className="App-intro">
-                    <p>{availableSeats} available seats</p>
-                    <p>{availableSeats <= 0 ? 'NO MORE SEATS!!!' : ''}</p>
-                    {availableSeats > 0
+                    <h2>{availableSeats <= 0 ? 'NO MORE SEATS!!!' : availableSeats + ' available seats'}</h2>
+                    {availableSeats > 0 && user === null
                         ? <Register
-                            onRegisterUser={(name, numberOfSeats) => dispatch(registerUser(name, numberOfSeats))}/>
+                            onRegisterUser={(name, numberOfSeats) => dispatch(registerUser(name, numberOfSeats))}
+                            availableSeats={availableSeats}/>
                         : ''}
 
                     {(user && user.numberOfSeats >= 0 && user.numberOfSeats <= availableSeats)
                         ? <BusPlan seats={seats}
+                                   user={user}
                                    allowNumbers={user.numberOfSeats}
-                                   onSeatClick={(seat) => dispatch(selectSeat(user, seat))}/>
-                        : ''}
-
-                    {(user && user.numberOfSeats >= 0 && user.numberOfSeats <= availableSeats)
-                        ? <button onClick={() => this.finishReservation()}>Finish</button>
+                                   onSeatClick={(seat) => dispatch(selectSeat(user, seat))}
+                                   onFinishReservation={() => this.finishReservation()}/>
                         : ''}
                 </div>
                 <div className="App-intro">
-                    <p>History</p>
-                    <ul>
-                        {histories.map((entry, index) =>
-                            <li key={index}>
-                                {index + 1}. {entry.user.name}: {entry.user.selectedSeats.map((seatNo, i) => <span key={i}>Seat {seatNo}</span>)}
-                            </li>
-                        )}
-                    </ul>
+                    <Histories histories={histories}/>
                 </div>
             </div>
         );

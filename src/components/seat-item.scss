@@ -6,10 +6,11 @@
   &.occupied {
     background: #333;
     color: #fff;
+    cursor: not-allowed !important;
   }
 
   &.selected {
-    background: #445544;
+    background: #009e73;
     color: #fff;
   }
 }

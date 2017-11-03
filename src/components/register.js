@@ -4,21 +4,18 @@ import PropTypes from 'prop-types';
 export default class Register extends React.Component {
     render() {
         return (
-            <div>
+            <div className="panel">
+                <h3>Please buy the ticket firstly</h3>
                 <div>
-                    <label>
-                        Name:
-                        <input ref="name"/>
-                    </label>
+                    <label>Name</label>
+                    <input ref="name"/>
                 </div>
                 <div>
-                    <label>
-                        Number of seats:
-                        <input type="number" ref="number"/>
-                    </label>
+                    <label>Number of seats required</label>
+                    <input type="number" ref="number" max={this.props.availableSeats} min="0"/>
                 </div>
                 <div>
-                    <button onClick={(e) => this.handleClick(e)}>Register</button>
+                    <button className="submit-btn" onClick={(e) => this.handleClick(e)}>BUY</button>
                 </div>
             </div>
         );
@@ -31,6 +28,10 @@ export default class Register extends React.Component {
             return;
         }
 
+        if (numberNode.value > this.props.availableSeats || numberNode.value <= 0) {
+            return;
+        }
+
         this.props.onRegisterUser(nameNode.value.trim(), numberNode.value);
 
         nameNode.value = '';
@@ -39,5 +40,6 @@ export default class Register extends React.Component {
 }
 
 Register.propTypes = {
-    onRegisterUser: PropTypes.func.isRequired
+    onRegisterUser: PropTypes.func.isRequired,
+    availableSeats: PropTypes.number.isRequired
 };
