@@ -12,8 +12,9 @@ import Histories from '../components/histories';
 
 class App extends React.Component {
     render() {
-        const {dispatch, user, seats, histories} = this.props;
+        const {dispatch, seats, histories, user} = this.props;
         let availableSeats = this.countAvailableSeats();
+        // let user = {name: "test", numberOfSeats: 2, selectedSeats: []};
         return (
             <div className="App">
                 <header className="App-header">
@@ -32,7 +33,9 @@ class App extends React.Component {
                                    user={user}
                                    allowNumbers={user.numberOfSeats}
                                    onSeatClick={(seat) => dispatch(selectSeat(user, seat))}
-                                   onFinishReservation={() => this.finishReservation()}/>
+                                   onFinishReservation={() => this.finishReservation()}
+                                   busDecker={1}
+                                   decker={1}/>
                         : ''}
                 </div>
                 <div className="App-intro">
