@@ -1,96 +1,158 @@
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+$breakpoint-tablet: 754px;
+
+.busPlan {
+  position: relative;
+  display: block;
+  margin: auto;
+
+  &::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  @media all and (min-width: $breakpoint-tablet) {
+    width: 644px;
+    margin: auto;
+  }
 }
 
-.App-header {
-  background-color: #222;
+.busPlan__layer {
+  position: relative;
+  float: left;
+  width: 300px;
+  max-width: 90vw;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+
+  @media all and (min-width: $breakpoint-tablet) {
+    border-bottom: none;
+  }
+}
+
+.busPlan__layer:first-child {
+  @media all and (min-width: $breakpoint-tablet) {
+    border-right: 1px solid #ddd;
+    border-bottom: none;
+  }
+}
+
+.busPlan__column {
+  width: calc(50% - 50px);
+  float: left;
+}
+
+.busPlan__column_narrow {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.busPlan__column_first {
+  margin-right: 55px;
+}
+
+.busPlan__seat {
+  display: block;
+  width: calc(50% - 10px);
   height: 50px;
-  padding: 20px;
-  color: white;
+  line-height: 50px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
   text-align: center;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  text-align: left;
-  margin: 20px auto;
-  max-width: 1180px;
-}
-
-.submit-btn {
-  background: #0072b2;
-  border: 0;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 500;
-  margin: 20px 0;
-  padding: 10px 20px;
-
-  &:hover {
-    background: lighten(#0072b2, 10%);
-  }
-
-  &:active {
-    background: darken(#0072b2, 10%);
-  }
-}
-
-button {
+  margin-bottom: 5px;
+  margin-right: 5px;
+  float: left;
+  transition: .3s ease-out;
   cursor: pointer;
-  outline: 0;
 }
 
-input {
-  font-size: 14px;
-  height: 28px;
-  line-height: 28px;
-  outline: 0;
-  margin-left: 15px;
-  margin-top: 10px;
-  padding: 0 10px;
-  width: 250px;
+.busPlan__seat_selected {
+  background: #73d700;
+  color: white;
 }
 
-label {
-  display: inline-block;
-  font-size: 14px;
-  width: 200px;
+.busPlan__seat_occupied {
+  background: #c8c8c8;
+  color: white;
+  cursor: not-allowed;
 }
 
-.panel {
-  border: solid 1px #eee;
-  padding: 10px 15px;
-}
-
-h2 {
-  color: #d55e00;
+.busPlan__driver {
+  width: calc(100% - 12px);
+  height: 50px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-bottom: 5px;
   text-align: center;
+  line-height: 50px;
+  background: #dddddd;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-
-  li {
-    margin: 5px 0;
-  }
+.busPlan__door {
+  width: calc(100% - 12px);
+  height: 109px;
+  margin-bottom: 6px;
+  float: left;
 }
 
-.seat-tag {
-  background: #ccc;
-  border-radius: 2px;
-  color: #fff;
-  padding: 2px 10px;
-  margin: 1px 5px;
+.busPlan__table {
+  width: calc(100% - 40px);
+  height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  margin-left: 15px;
+  text-align: center;
+  line-height: 50px;
+  background: #dddddd;
+  float: left;
 }
 
-.seat-no {
-  color: #d55e00;
-  font-size: 30px;
-  font-weight: 700;
-  margin: 0 10px;
+.busPlan__normal_seat {
+  width: calc(50% - 10px);
+  height: 50px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  text-align: center;
+  line-height: 50px;
+  background: #dddddd;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  float: left;
+}
+
+.busPlan__toilet {
+  width: calc(100% - 10px);
+  height: 80px;
+  line-height: 80px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  text-align: center;
+  float: left;
+}
+
+.busPlan__stairs {
+  width: calc(100% - 12px);
+  height: 108px;
+  border-radius: 3px;
+  text-align: center;
+  line-height: 100px;
+  float: left;
+  border: 1px solid #ddd;
+  margin-bottom: 5px;
+  background: #dddddd;
+}
+
+.busPlan__layerTitle {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.busPlan__empty {
+  width: 40px;
+  float: left;
+  height: 50px;
+  margin-bottom: 5px;
 }

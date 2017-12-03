@@ -1,11 +1,15 @@
-export const SELECT_SEAT = 'SELECT_SEAT';
-export const OCCUPY_SEAT = 'OCCUPY_SEAT';
+export const LOAD_BUS_PLAN = function(busPlan) {
+    return {
+        type: 'LOAD_BUS_PLAN',
+        busPlan: busPlan,
+    };
+};
 
-export function selectSeat(user, seat) {
-    return { type: SELECT_SEAT, user, seat }
-}
+export const SELECT_SEAT = function (seat) {
+    return {
+        type: 'SELECT_SEAT',
+        seat: seat,
+    };
+};
 
-export function occupySeat(seatNo) {
-    return { type: OCCUPY_SEAT, seatNo }
-}
 
